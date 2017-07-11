@@ -6,10 +6,13 @@ const fn = () => { };
 
 router.get('/api/getArticle', (req, res) => {
     const _id = req.query.id;
+    const start = new Date().getTime();
     db.Article.findOne({ _id }, (err, doc) => {
         if (err) {
             console.log(err);
         } else if (doc) {
+            const execTime = new Date().getTime() - start;
+            res.set('X-Response-Time', `${execTime}ms`);
             res.send(doc);
         }
     });
