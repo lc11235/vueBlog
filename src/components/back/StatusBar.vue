@@ -25,6 +25,7 @@
             logout(){
                 unset('user', '/', window.location.hostname);
                 this.SET_USER({name: '', pwd: ''});
+                this.DELETE_TOKEN();
                 this.$router.push('/');
             },
             ...mapMutations(['SET_USER'])

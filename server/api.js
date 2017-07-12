@@ -1,10 +1,13 @@
-const express = require('express');
-const router = express.Router();
-const db = require('./db.js');
-const cryptoMd5 = require('./tool/cryptoMd5.js');
+const express       = require('express');
+const router        = express.Router();
+const db            = require('./db.js');
+const cryptoMd5     = require('./tool/cryptoMd5.js');
+const jsonwebtoken  = require('jsonwebtoken');
+const jwt           = require('express-jwt');
+const getErrorMessage = require('./tool/message-handle.js');
 const fn = () => { };
 
-router.get('/api/getArticle', (req, res) => {
+router.get('/api/getArticle', jwt({secret: config.token.secret}), (req, res) => {
     const start = new Date().getTime();
     const _id = req.query.id;
     db.Article.findOne({ _id }, (err, doc) => {
@@ -18,7 +21,7 @@ router.get('/api/getArticle', (req, res) => {
     });
 });
 
-router.get('/api/getArticles', (req, res) => {
+router.get('/api/getArticles', jwt({secret: config.token.secret}), (req, res) => {
     const start = new Date().getTime();
     db.Article.find(null, 'articleTitle author postTime content', (err, doc) => {
         if (err) {
@@ -36,6 +39,11 @@ router.post('/api/login', (req, res) => {
     let { name, pwd } = req.body;
     db.User.findOne({ name }, 'pwd', (err, doc) => {
         pwd = cryptoMd5(pwd);
+        const token = jsonwebtoken.sign({
+            name: name
+        }, config.token.secret, {
+            expiresIn: config.token.expired
+        });
         const execTime = new Date().getTime() - start;
         res.set('X-Response-Time', `${execTime}ms`);
         switch (true) {
@@ -46,7 +54,7 @@ router.post('/api/login', (req, res) => {
                 res.send({ state: 0, msg: '账号不存在！' });
                 break;
             case doc.pwd === pwd:
-                res.send({ state: 1, msg: '登陆成功！' });
+                res.send({ state: 1, msg: '登陆成功！', token: token });
                 break;
             case doc.pwd !== pwd:
                 res.send({ state: 2, msg: '密码错误！' });
@@ -58,7 +66,7 @@ router.post('/api/login', (req, res) => {
     });
 });
 
-router.post('/api/saveArticle', (req, res) => {
+router.post('/api/saveArticle', jwt({secret: config.token.secret}), (req, res) => {
     const start = new Date().getTime();
     const id = req.body._id;
     // TODO：加入最后更新时间
@@ -80,7 +88,7 @@ router.post('/api/saveArticle', (req, res) => {
     res.status(200).end();
 });
 
-router.post('/api/deleteArticle', (req, res) => {
+router.post('/api/deleteArticle', jwt({secret: config.token.secret}), (req, res) => {
     const start = new Date().getTime();
     db.Article.findByIdAndRemove(req.body.id, fn);
     const execTime = new Date().getTime() - start;
@@ -88,7 +96,7 @@ router.post('/api/deleteArticle', (req, res) => {
     res.status(200).end();
 });
 
-router.post('/api/getLinks', (req, res) => {
+router.post('/api/getLinks', jwt({secret: config.token.secret}), (req, res) => {
     const start = new Date().getTime();
     db.Link.find(null, (err, doc) => {
         if(err){
@@ -101,7 +109,7 @@ router.post('/api/getLinks', (req, res) => {
     });
 });
 
-router.post('/api/saveLinks', (req, res) => {
+router.post('/api/saveLinks', jwt({secret: config.token.secret}), (req, res) => {
     //const start = new Date().getTime();
     // todo
     const links = req.body || [];
@@ -112,7 +120,7 @@ router.post('/api/saveLinks', (req, res) => {
     .catch(() => res.status(200).end());
 });
 
-router.post('/api/savePwd', (req, res) => {
+router.post('/api/savePwd', jwt({secret: config.token.secret}), (req, res) => {
     const start = new Date().getTime();
     let {name, pwd} = req.body;
     pwd = cryptoMd5(pwd);

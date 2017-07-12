@@ -23,6 +23,14 @@ export default{
     UPDATE_TITLE: (state, title) => {
         state.article.title = title;
     },
+    SET_TOKEN: (state, token) => {
+        localStorage.token = token;
+        state.token = token;
+    },
+    DELETE_TOKEN: (state) => {
+        localStorage.removeItem('token');
+        state.token = null;
+    },
     UPDATE_LINK_NAME(state, {name, index}){
         const href = state.links[index].href;
         state.links.splice(index, 1, {name, href});

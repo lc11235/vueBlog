@@ -24,9 +24,15 @@ app.use(api);
 app.post('/api/setup', (req, res) => {
     let {name, pwd} = req.body;
     pwd = cryptoMd5(pwd);
+    const token = jsonwebtoken.sign({
+            name: name
+        }, config.token.secret, {
+            expiresIn: config.token.expired
+        });
     new db.User({name, pwd})
     .save()
     .then(() => {
+        res.send({token: token});
         res.status(200).end();
         db.initialized = true;
     })

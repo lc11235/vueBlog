@@ -14,18 +14,19 @@ Vue.use(Router);
 export default new Router({
     mode: 'history',
     routes: [
-        {path: '/archive', name: 'archive', component: Archive},
-        {path: '/article', name: 'article', component: Article},
-        {path: '/', component: Login},
+        {path: '/archive', name: 'archive', component: Archive, requireAuth: true},
+        {path: '/article', name: 'article', component: Article, requireAuth: true},
+        {path: '/', component: Login, requireAuth: false},
         {
             path: '/console',
             component: Console,
+            requireAuth: true,
             children: [
-                {path: '', component: Articles},
-                {path: 'articles', name: 'articles', component: Articles},
-                {path: 'editor', name: 'editor', component: Editor},
-                {path: 'links', name: 'links', component: Links},
-                {path: 'account', name: 'account', component: Account}
+                {path: '', component: Articles, requireAuth: true},
+                {path: 'articles', name: 'articles', component: Articles, requireAuth: true},
+                {path: 'editor', name: 'editor', component: Editor, requireAuth: true},
+                {path: 'links', name: 'links', component: Links, requireAuth: true},
+                {path: 'account', name: 'account', component: Account, requireAuth: true}
             ]
         }
     ]
