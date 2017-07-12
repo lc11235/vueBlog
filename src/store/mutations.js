@@ -24,10 +24,12 @@ export default{
         state.article.title = title;
     },
     SET_TOKEN: (state, token) => {
-        localStorage.token = token;
+        const localStorage = window.localStorage;
+        localStorage.setItem("token", token);
         state.token = token;
     },
     DELETE_TOKEN: (state) => {
+        const localStorage = window.localStorage;
         localStorage.removeItem('token');
         state.token = null;
     },

@@ -89,7 +89,9 @@ export default {
             .then(response => {
                 if(response.data.state === 1){
                     commit('SET_USER', payload);
+                    commit('SET_TOKEN', response.data.token);
                 } else {
+                    
                     return Promise.reject(response.data.msg);
                 }
             });

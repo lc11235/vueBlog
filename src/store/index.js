@@ -12,6 +12,7 @@ const store = new Vuex.Store({
         isToasting: false,
         articles: [],
         article: {},
+        token: '',
         user: {name: '', pwd: ''},
         links: [],
         toast: {

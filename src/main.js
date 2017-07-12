@@ -25,26 +25,7 @@ axios.interceptors.request.use(config =>{
     return Promise.reject(err);
 });
 
-//回复的拦截器
-axios.interceptors.response.use(
-    reponse => {
-        return response;
-    },
-    error => {
-        if(error.response){
-            switch(error.response.status){
-                case 401:
-                    // 401清除token信息并跳转到登录页面
-                    commit('DELETE_TOKEN');
-                    router.replace({
-                        path: '/login',
-                        query: {redirect: router.currentRoute.fullPath}
-                    })
-            }
-        }
-        return Promise.reject(error.response.data);
-    }
-);
+
 
 Vue.filter('toDate', date => {
     const d = new Date(date);
@@ -59,7 +40,7 @@ router.beforeEach((to, from, next) => {
     
     NProgress.start();
     if(to.requireAuth){ //判断该路由是否需要登录
-        if(store.state.token){ // 通过vuex state获取当前的token是否存在
+        if(this.$store.state.token){ // 通过vuex state获取当前的token是否存在
             next();
         }
         else {

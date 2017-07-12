@@ -28,7 +28,7 @@
                 this.DELETE_TOKEN();
                 this.$router.push('/');
             },
-            ...mapMutations(['SET_USER'])
+            ...mapMutations(['SET_USER', 'DELETE_TOKEN'])
         },
         computed: {
             time(){
