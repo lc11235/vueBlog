@@ -1,10 +1,5 @@
 <template>
     <header class="statusBar">
-        <router-link :to="{path:'/archive'}"
-                     tag="button"
-                     class="home">
-            <i class="fa fa-fire fa-2x"></i>
-        </router-link>
         <div class="user">
             <span>
                 {{time}}好，{{user.name}}
@@ -26,7 +21,7 @@
                 unset('user', '/', window.location.hostname);
                 this.SET_USER({name: '', pwd: ''});
                 this.DELETE_TOKEN();
-                this.$router.push('/');
+                this.$router.push('login');
             },
             ...mapMutations(['SET_USER', 'DELETE_TOKEN'])
         },
@@ -48,10 +43,6 @@
     header.statusBar{
         height: $headerHeight;
         z-index: 1;
-        .home{
-            width: 200px;
-            height: $headerHeight;
-        }
         .user{
             height: $headerHeight;
             float: right;

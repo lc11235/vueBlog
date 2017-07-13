@@ -7,7 +7,7 @@
             </div>
             <menu class="navigation">
                 <ul>
-                    <router-link :to="{path: '/archive'}" tag="li">
+                    <router-link :to="{name:'archive'}" tag="li">
                         <i class="fa fa-star fa-fw"></i>
                         <span>总览</span>
                     </router-link>
@@ -48,7 +48,7 @@
     } 
 </script>
 <style lang="sass" rel="stylesheet/scss" scoped>
-    $pictureSize: 100px;
+    $pictureSize: 140px;
     .container{
         height: 100%;
     }
@@ -56,24 +56,29 @@
     aside.console{
         box-sizing: border-box;
         padding-top: 50px;
-        float: left;
-        height: calc(100% - 50px);
-        width: 200px;
-        background-color: transparent;
+        height: 100%;
+        width: 250px;
+        left: 0;
+        top: 0;
+        position: fixed;
+        z-index: 2;
+        overflow: auto;
+        background-color: #202020!important;
         .circle{
             width: $pictureSize;
             height: $pictureSize;
             margin: auto;
-            border-radius: 50%;
-            over-flow:hidden;
             img{
                 width: $pictureSize;
                 height: $pictureSize;
+                border-radius: 50%;
+                over-flow:hidden;
             }
         }
         menu{
             margin: 20px 0;
             padding: 0;
+            color: #999;
             ul{
                 padding: 0 50px;
                 > li{
@@ -93,7 +98,7 @@
     }
 
     div.subView{
-        margin-left: 200px;
+        margin-left: 250px;
         height: calc(100% - 50px);
     }
 </style>

@@ -10,8 +10,7 @@
 </template>
 <style lang="sass" rel="stylesheet/scss" scoped>
     footer{
-        position: absolute;
-        bottom: 16px 0;
+        height: 80px;
         div{
             text-align: center;
             color: #aaa;

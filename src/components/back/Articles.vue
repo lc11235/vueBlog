@@ -53,7 +53,7 @@
         button {
             @include center();
             position: relative;
-            width: 200px;
+            width: 250px;
             height: 60px;
             margin: 30px 0;
             font-size: 20px;

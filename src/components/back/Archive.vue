@@ -1,6 +1,5 @@
 <template>
-    <main class="wrap">
-        <my-header></my-header>
+    
         <section class="archive">
             <ul>
                 <li class="item" v-for="year in archive.years">
@@ -10,7 +9,7 @@
                             <span class="date">
                                 {{article.postTime | toDate}}
                             </span>
-                            <router-link :to="{path: 'article', query:{id:article._id}}" tag="span" class="title">
+                            <router-link :to="{name: 'article', query:{id:article._id}}" tag="span" class="title">
                                 {{article.articleTitle}}
                             </router-link>
                         </li>
@@ -18,14 +17,10 @@
                 </li>
             </ul>
         </section>
-        <my-footer></my-footer>
-    </main>
+       
 </template>
 <script>
     import { mapState, mapGetters, mapActions } from 'vuex';
-    import MyHeader from './MyHeader.vue';
-    import MyFooter from './MyFooter.vue';
-    import Spinner from '../share/Spinner.vue';
 
     export default {
         created() {
@@ -35,8 +30,7 @@
             ...mapState(['articles']),
             ...mapGetters(['archive'])
         },
-        methods: { ...mapActions(['getArticles']) },
-        components: { Spinner, MyHeader, MyFooter }
+        methods: { ...mapActions(['getArticles']) }
     }
 </script>
 <style lang="sass" rel="stylesheet/scss" scoped>
@@ -46,9 +40,10 @@
     }
 
     section.archive{
-        padding-bottom: 160px;
+        height: 100%;
         ul {
-            padding: 0;
+            padding-top: 40px;
+            margin-left: 40px;
             li {
                 list-style: none;
                 padding: 2px 0 0 40px;

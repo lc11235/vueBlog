@@ -2,10 +2,10 @@
 
 @mixin rightSide() {
   position: absolute;
-  left: 200px;
+  left: 250px;
   top: 50px;
   bottom: 0;
-  width: calc(100% - 200px);
+  width: calc(100% - 250px);
   overflow-y: auto;
 }
 

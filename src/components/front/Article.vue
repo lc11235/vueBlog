@@ -54,7 +54,8 @@
     .wrap{
         min-height: 100%;
         position: relative;
-        article {
+        .article {
+            min-height: calc(100vh - 100px - 80px);
             .title{
                 margin: 0.65em 0;
                 font-size: 1.5em;

@@ -1,14 +1,14 @@
-import Vue          from 'vue';
-import axios        from 'axios';
-import NProgress    from 'nprogress';
-import {mapState}   from 'vuex';
+import Vue from 'vue';
+import axios from 'axios';
+import NProgress from 'nprogress';
+import { mapState } from 'vuex';
 
-import Spinner      from './components/share/Spinner.vue';
-import Toast        from './components/share/Toast.vue';
-import MyCanvas     from './components/share/MyCanvas.vue';
+import Spinner from './components/share/Spinner.vue';
+import Toast from './components/share/Toast.vue';
+import MyCanvas from './components/share/MyCanvas.vue';
 
-import store        from './store';
-import router       from './router';
+import store from './store';
+import router from './router';
 
 import './style/index.scss';
 import 'nprogress/nprogress.css';
@@ -16,12 +16,12 @@ import 'nprogress/nprogress.css';
 Vue.prototype.$http = axios;
 
 //请求的拦截器
-axios.interceptors.request.use(config =>{
-    if(store.state.token){
-        config.headers.Authorization = `Bearer ${store.state.token}`;
+axios.interceptors.request.use(config => {
+    if (store.state.token || localStorage.getItem("token")) {
+        config.headers.Authorization = `Bearer ${store.state.token || localStorage.getItem("token")}`;
     }
     return config;
-},err => {
+}, err => {
     return Promise.reject(err);
 });
 
@@ -37,23 +37,22 @@ Vue.filter('toDate', date => {
 NProgress.configure({ easing: 'ease', speed: 800, minimum: 0.1 });
 
 router.beforeEach((to, from, next) => {
-    
+
     NProgress.start();
-    if(to.requireAuth){ //判断该路由是否需要登录
-        if(this.$store.state.token){ // 通过vuex state获取当前的token是否存在
+    if (to.matched.some(record => record.meta.requireAuth)) { //判断该路由是否需要登录
+        if (store.state.token || localStorage.getItem("token")) { // 通过vuex state获取当前的token是否存在
             next();
         }
         else {
             next({
                 path: '/login',
-                query: {redirect: to.fullPath}  // 将跳转的路由path作为参数，登录成功后跳转到该路由
+                query: { redirect: to.fullPath }  // 将跳转的路由path作为参数，登录成功后跳转到该路由
             });
         }
-    } else
-    {
+    } else {
         next();
     }
-    
+
 });
 
 router.afterEach(transition => {
@@ -63,6 +62,6 @@ router.afterEach(transition => {
 new Vue({
     router,
     store,
-    components: {Spinner, Toast, MyCanvas},
+    components: { Spinner, Toast, MyCanvas },
     computed: mapState(['isLoading', 'isToasting'])
 }).$mount('#CMS2');
