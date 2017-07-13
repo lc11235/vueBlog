@@ -7,7 +7,7 @@ module.exports = {
     port: 8080,
     token: {
         secret: 'weimengjiao',
-        expired: '1d'
+        expired: '5m'
     },
     errCode: {
         1000: 'USER_NOT_EXISTED',

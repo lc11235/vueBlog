@@ -8,7 +8,7 @@
         
         <ul class="menu">
             <li v-for="link in links">
-                <a :href="link.href">
+                <a :href="link.href" target="_blank">
                     {{link.name}}
                 </a>
             </li>
