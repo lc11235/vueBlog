@@ -29,7 +29,13 @@
     "serve-favicon": "^2.3.0",
     "compression":"1.6.2",
     "nprogress": "0.2.0",
-    "axios": "0.16.1"
+    "axios": "0.16.1",
+    "lru-cache":"^4.1.1",
+    "vue":"^2.4.1",
+    "vue-server-renderer":"^2.4.1",
+    "vue-router":"^2.7.0",
+    "vuex":"^2.3.1",
+    "vuex-router-sync":"^4.2.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.5.3",
