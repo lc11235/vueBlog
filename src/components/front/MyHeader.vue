@@ -24,7 +24,7 @@
         computed: mapState(['links'])
     }
 </script>
-<style lang="sass" rel="stylesheet/scsss" scoped>
+<style lang="sass" rel="stylesheet/scss" scoped>
     header.myHeader{
         min-height: 60px;
         .circle{
